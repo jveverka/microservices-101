@@ -2,6 +2,7 @@
 This is simple Akka cluster demo tailored for deployment into kubernetes environment.
 
 ### Build and run
+Build and run on local machine.
 ```
 gradle clean installDist 
 ./build/install/akka-k8s-cluster/bin/akka-k8s-cluster
@@ -16,6 +17,7 @@ docker run -p 8558:8558 -p 2552:2552 akka-k8s-cluster:1.0.0-SNAPSHOT
 ```
 
 ## k8s deployment
+![deployment](docs/deployment-diagram.svg)
 K8s deploy sequence:
 ```
 kubectl apply -f akka-k8s-cluster-roles.yaml
@@ -25,6 +27,7 @@ kubectl logs akka-k8s-cluster-<podId>
 K8s undeploy sequence:
 ```
 kubectl delete service/akka-k8s-cluster
+kubectl delete service/akka-k8s-cluster-lb
 kubectl delete deployment.apps/akka-k8s-cluster
 ```
 
