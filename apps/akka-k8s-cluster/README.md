@@ -30,6 +30,14 @@ kubectl delete service/akka-k8s-cluster
 kubectl delete service/akka-k8s-cluster-lb
 kubectl delete deployment.apps/akka-k8s-cluster
 ```
+Scale up deployment:
+```
+kubectl scale deployment akka-k8s-cluster --replicas=3
+```
+Scale down deployment:
+```
+kubectl scale deployment akka-k8s-cluster --replicas=2
+```
 
 ## Akka management
 Akka management endpoints:

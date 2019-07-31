@@ -38,6 +38,14 @@ K8s undeploy sequence:
 kubectl delete service/service-simple-rest
 kubectl delete deployment.apps/service-simple-rest
 ```
+Scale up deployment:
+```
+kubectl scale deployment simple-rest --replicas=5
+```
+Scale down deployment:
+```
+kubectl scale deployment simple-rest --replicas=2
+```
 
 ### REST endpoints
 * __GET__ ``http://hostname:port/data/info``
