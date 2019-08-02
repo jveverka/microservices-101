@@ -7,6 +7,7 @@ All examples are tailored for training and better understanding of distributed m
 Some simple examples to practice microservice deployments. 
 * [Simple REST service](apps/service-simple-rest) - java11, [SpringBoot](https://spring.io/projects/spring-boot)
 * [Application cluster](apps/akka-k8s-cluster) for kubernetes - java11, [Akka](https://akka.io/)
+* [Multi layer app](apps/multi-layer-app) - microservice app deployment, frontend, backend, [gRPC](https://grpc.io/)
 
 ## Kubernetes cluster
 To deploy example services, kubernetes cluster is required. 

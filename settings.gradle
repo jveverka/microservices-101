@@ -1,5 +1,13 @@
 include "service-simple-rest"
 include "akka-k8s-cluster"
 
+include "app-apis"
+include "app-backend"
+include "app-frontend"
+
 project(':service-simple-rest').projectDir = new File('apps/service-simple-rest')
 project(':akka-k8s-cluster').projectDir = new File('apps/akka-k8s-cluster')
+
+project(':app-apis').projectDir = new File('apps/multi-layer-app/app-apis')
+project(':app-backend').projectDir = new File('apps/multi-layer-app/app-backend')
+project(':app-frontend').projectDir = new File('apps/multi-layer-app/app-frontend')

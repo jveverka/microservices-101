@@ -1,0 +1,16 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'itx.examples.mlapp.BackendApp'
+
+group = 'itx.examples.mlapp'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.beust:jcommander:1.72'
+}

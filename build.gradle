@@ -20,4 +20,17 @@ project(':service-simple-rest') {
 project(':akka-k8s-cluster') {
 }
 
+project(':app-apis') {
+}
 
+project(':app-backend') {
+    dependencies {
+        compile project(':app-apis')
+    }
+}
+
+project(':app-frontend') {
+    dependencies {
+        compile project(':app-apis')
+    }
+}

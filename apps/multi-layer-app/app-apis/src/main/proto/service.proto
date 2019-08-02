@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "itx.examples.mlapp.service";
+option java_multiple_files = true;
+
+service DataService {
+    rpc GetData (DataRequest) returns (DataResponse) {}
+}
+
+service NotificationService {
+    rpc OnNewBackend(BackendInfo) returns (Empty) {}
+}
+
+message DataRequest {
+    uint64 id = 1;
+    string data = 2;
+}
+
+message DataResponse {
+    uint64 requestId = 1;
+    string data = 2;
+}
+
+message BackendInfo {
+    string id = 1;
+    string hostname = 2;
+    uint32 port = 3;
+}
+
+message Empty {
+}
+
