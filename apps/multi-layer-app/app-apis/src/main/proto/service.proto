@@ -13,20 +13,26 @@ service NotificationService {
 
 message DataRequest {
     uint64 id = 1;
-    string data = 2;
+    DataContainer data = 2;
+    string capability = 3;
 }
 
 message DataResponse {
     uint64 requestId = 1;
-    string data = 2;
+    DataContainer data = 2;
 }
 
 message BackendInfo {
     string id = 1;
     string hostname = 2;
     uint32 port = 3;
+    string capability = 4;
+}
+
+message DataContainer {
+    string typeId = 1; // data type unique ID
+    bytes data = 2;    // generic byte array
 }
 
 message Empty {
 }
-
