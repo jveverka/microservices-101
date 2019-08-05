@@ -4,6 +4,7 @@ option java_package = "itx.examples.mlapp.service";
 option java_multiple_files = true;
 
 service DataService {
+    rpc GetInfo(Empty) returns (BackendInfo) {}
     rpc GetData (DataRequest) returns (DataResponse) {}
 }
 
