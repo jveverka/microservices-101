@@ -28,8 +28,8 @@ public class BackendServiceImpl implements BackendManager, TaskManager, AutoClos
 
     @Override
     public void connect(String backendId, String host, int port) throws Exception {
-        LOG.info("connect: {} {}:{}", backendId, host, port);
         Connection connection = connectionFactory.createConnect(backendId, host, port);
+        LOG.info("connect: id={} capability={} {}:{}", connection.getBackendInfo().getCapability(), backendId, host, port);
         connections.put(backendId, connection);
     }
 

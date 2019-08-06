@@ -47,7 +47,7 @@ spec:
                   apiVersion: v1
                   fieldPath: spec.nodeName
             - name: FRONTEND_HOSTNAME
-              value: "app-frontend.default.svc.cluster.local"
+              value: "app-frontend-grpc-lb.default.svc.cluster.local"
             - name: CAPABILITY
               value: "hyper"
           ports:

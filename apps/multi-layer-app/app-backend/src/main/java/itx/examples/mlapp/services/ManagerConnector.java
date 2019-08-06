@@ -54,9 +54,10 @@ public class ManagerConnector implements AutoCloseable {
 
         @Override
         public void run() {
+            ManagedChannel managedChannel = null;
             try {
                 LOG.info("Connecting to Frontent manager {}:{}", managerHost, managerPort);
-                ManagedChannel managedChannel = ManagedChannelBuilder.forAddress(managerHost, managerPort)
+                managedChannel = ManagedChannelBuilder.forAddress(managerHost, managerPort)
                         .usePlaintext()
                         .build();
                 NotificationServiceGrpc.NotificationServiceStub notificationServiceGrpc = NotificationServiceGrpc.newStub(managedChannel);
@@ -70,13 +71,20 @@ public class ManagerConnector implements AutoCloseable {
                 notificationServiceGrpc.onNewBackend(request, observer);
                 Optional<Empty> confirmation = observer.awaitForValue(5, TimeUnit.SECONDS);
                 if (confirmation.isPresent()) {
-                    managedChannel.awaitTermination(1, TimeUnit.SECONDS);
+                    managedChannel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
                     LOG.info("Frontent manager {}:{} worker notification send !", managerHost, managerPort);
                 } else {
+                    LOG.info("Confirmation not present, rescheduling ...");
                     reschedule();
                 }
             } catch (Exception e) {
+                LOG.error("Exception: ", e);
                 reschedule();
+            } finally {
+                if (managedChannel != null) {
+                    LOG.info("shutting down managed channel");
+                    managedChannel.shutdown();
+                }
             }
         }
 

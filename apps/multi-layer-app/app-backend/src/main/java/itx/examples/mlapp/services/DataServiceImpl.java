@@ -40,6 +40,7 @@ public class DataServiceImpl extends DataServiceGrpc.DataServiceImplBase {
         DataResponse dataResponse = DataResponse.newBuilder()
                 .setData(dataContainer)
                 .setRequestId(request.getId())
+                .setProcessorId(id)
                 .build();
         responseObserver.onNext(dataResponse);
         responseObserver.onCompleted();

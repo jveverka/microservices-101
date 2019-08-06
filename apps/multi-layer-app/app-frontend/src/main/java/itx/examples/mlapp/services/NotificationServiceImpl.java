@@ -21,7 +21,6 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
         LOG.info("onNewBackend: {} {}:{}", request.getId(), request.getHostname(), request.getPort());
         try {
             backendService.connect(request.getId(), request.getHostname(), request.getPort());
-            LOG.info("Backend service connected {} {}:{}", request.getId(), request.getHostname(), request.getPort());
         } catch (Exception e) {
             LOG.error("Backend service connection has failed !");
         }

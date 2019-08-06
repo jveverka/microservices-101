@@ -6,7 +6,8 @@ import io.undertow.Undertow;
 import io.undertow.server.RoutingHandler;
 import io.undertow.server.handlers.BlockingHandler;
 import itx.examples.mlapp.http.BlockingExecHandler;
-import itx.examples.mlapp.http.HttpStatusHandler;
+import itx.examples.mlapp.http.CapabilitiesHandler;
+import itx.examples.mlapp.http.StatusHandler;
 import itx.examples.mlapp.services.BackendServiceImpl;
 import itx.examples.mlapp.services.ConnectionFactory;
 import itx.examples.mlapp.services.ConnectionFactoryImpl;
@@ -39,7 +40,8 @@ public class FrontendApp {
                 .build();
 
         RoutingHandler routingHandler = new RoutingHandler()
-                .get("/status", new HttpStatusHandler(backendService))
+                .get("/status", new StatusHandler(backendService))
+                .get("/capabilities", new CapabilitiesHandler(backendService))
                 .post("/exec", new BlockingHandler(new BlockingExecHandler(backendService)));
 
         Undertow undertowServer = Undertow.builder()

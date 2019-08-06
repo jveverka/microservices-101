@@ -28,13 +28,13 @@ public class BackendApp {
                 .parse(args);
 
         String id = UUID.randomUUID().toString();
-        LOG.info("BackendApp started with capability: {} {} {}:{} ...",
+        LOG.info("BackendApp started id={} capability={} {}:{} ...",
                 id, arguments.getCapability(), arguments.getSelfAddress(), arguments.getPort());
 
         DataServiceImpl dataService =
                 new DataServiceImpl(id, arguments.getSelfAddress(), arguments.getPort(), arguments.getCapability());
         ManagerConnector managerConnector =
-                new ManagerConnector(id, arguments.getManagerAddress(), FRONTEND_DEFAULT_GRPC_PORT, arguments.getCapability(),
+                new ManagerConnector(id, arguments.getManagerAddress(), arguments.getManagerPort(), arguments.getCapability(),
                         arguments.getSelfAddress(), BACKEND_DEFAULT_GRPC_PORT);
         managerConnector.startManagerConnectionLoop();
 

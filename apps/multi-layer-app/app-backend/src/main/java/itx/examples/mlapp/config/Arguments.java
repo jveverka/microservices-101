@@ -4,11 +4,15 @@ import com.beust.jcommander.Parameter;
 
 import static itx.examples.mlapp.apis.Constants.BACKEND_DEFAULT_GRPC_PORT;
 import static itx.examples.mlapp.apis.Constants.DEFAULT_HOSTNAME;
+import static itx.examples.mlapp.apis.Constants.FRONTEND_DEFAULT_GRPC_PORT;
 
 public class Arguments {
 
     @Parameter(names = { "-m", "--manager-address" }, description = "IP address of manager service")
     private String managerAddress = DEFAULT_HOSTNAME;
+
+    @Parameter(names = { "-o", "--manager-port" }, description = "Port of manager service")
+    private Integer managerPort = FRONTEND_DEFAULT_GRPC_PORT;
 
     @Parameter(names = { "-a", "--self-address" }, description = "IP address of machine where this service is running")
     private String selfAddress = DEFAULT_HOSTNAME;
@@ -35,4 +39,7 @@ public class Arguments {
         return port;
     }
 
+    public Integer getManagerPort() {
+        return managerPort;
+    }
 }

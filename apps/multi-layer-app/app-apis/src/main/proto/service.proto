@@ -21,6 +21,7 @@ message DataRequest {
 message DataResponse {
     uint64 requestId = 1;
     DataContainer data = 2;
+    string processorId = 3;
 }
 
 message BackendInfo {

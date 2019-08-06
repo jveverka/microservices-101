@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class AppUtils {
@@ -33,6 +34,11 @@ public final class AppUtils {
 
     public static String renderToJson(DataResponse response) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(response);
+    }
+
+    public static String filterCapabilitiesAndRenderToJson(Collection<BackendInfo> status) {
+        Set<String> capabilitiesString = status.stream().map(BackendInfo::getCapability).collect(Collectors.toSet());
+        return "[ " + capabilitiesString.stream().collect(Collectors.joining(", ")) + " ]";
     }
 
 }

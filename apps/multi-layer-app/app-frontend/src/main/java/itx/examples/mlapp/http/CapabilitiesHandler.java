@@ -9,11 +9,11 @@ import itx.examples.mlapp.utils.AppUtils;
 
 import java.util.Collection;
 
-public class HttpStatusHandler implements HttpHandler {
+public class CapabilitiesHandler implements HttpHandler {
 
     private final BackendServiceImpl backendService;
 
-    public HttpStatusHandler(BackendServiceImpl backendService) {
+    public CapabilitiesHandler(BackendServiceImpl backendService) {
         this.backendService = backendService;
     }
 
@@ -22,6 +22,6 @@ public class HttpStatusHandler implements HttpHandler {
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
         Collection<BackendInfo> status = backendService.getStatus();
         exchange.setStatusCode(200);
-        exchange.getResponseSender().send(AppUtils.renderToJson(status));
+        exchange.getResponseSender().send(AppUtils.filterCapabilitiesAndRenderToJson(status));
     }
 }
