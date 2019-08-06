@@ -1,0 +1,38 @@
+package itx.examples.mlapp.utils;
+
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.util.JsonFormat;
+import itx.examples.mlapp.service.BackendInfo;
+import itx.examples.mlapp.service.BackendInfos;
+import itx.examples.mlapp.service.DataRequest;
+import itx.examples.mlapp.service.DataResponse;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+public final class AppUtils {
+
+    private AppUtils() {
+    }
+
+    public static String renderToJson(Collection<BackendInfo> backendInfoCollection) throws InvalidProtocolBufferException {
+        BackendInfos.Builder backendInfosBuilder = BackendInfos.newBuilder();
+        backendInfosBuilder.addAllInfos(backendInfoCollection);
+        return JsonFormat.printer().print(backendInfosBuilder.build());
+    }
+
+    public static DataRequest createDataRequest(InputStream inputStream) throws InvalidProtocolBufferException {
+        DataRequest.Builder builder = DataRequest.newBuilder();
+        String result = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
+        JsonFormat.parser().merge(result, builder);
+        return builder.build();
+    }
+
+    public static String renderToJson(DataResponse response) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(response);
+    }
+
+}

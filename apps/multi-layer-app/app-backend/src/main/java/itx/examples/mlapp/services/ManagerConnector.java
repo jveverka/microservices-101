@@ -30,12 +30,12 @@ public class ManagerConnector implements AutoCloseable {
     private final int selfPort;
     private final AtomicInteger counter;
 
-    public ManagerConnector(String managerHost, int managerPort, String capability, String selfHostName, int selfPort) {
+    public ManagerConnector(String id, String managerHost, int managerPort, String capability, String selfHostName, int selfPort) {
         this.executorService = Executors.newSingleThreadExecutor();
         this.managerHost = managerHost;
         this.managerPort = managerPort;
         this.capability = capability;
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.selfHostName = selfHostName;
         this.selfPort = selfPort;
         this.counter = new AtomicInteger(0);

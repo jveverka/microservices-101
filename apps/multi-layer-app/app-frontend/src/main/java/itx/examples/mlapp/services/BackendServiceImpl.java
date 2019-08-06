@@ -14,9 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class BackendServiceImpl implements BackendManager, TaskManager {
+public class BackendServiceImpl implements BackendManager, TaskManager, AutoCloseable {
 
-    final private static Logger LOG = LoggerFactory.getLogger(BackendServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BackendServiceImpl.class);
 
     private final Map<String, Connection> connections;
     private final ConnectionFactory connectionFactory;
@@ -40,6 +40,7 @@ public class BackendServiceImpl implements BackendManager, TaskManager {
 
     @Override
     public void disconnect(String backendId) {
+        LOG.info("disconnect: {}", backendId);
         Connection connection = connections.remove(backendId);
         if (connection != null) {
             try {
@@ -52,12 +53,26 @@ public class BackendServiceImpl implements BackendManager, TaskManager {
 
     @Override
     public Future<DataResponse> execute(DataRequest dataRequest) {
+        LOG.info("execute: {}", dataRequest.getCapability());
         Optional<Connection> connection = connections.values().stream().filter(c -> c.getBackendInfo().getCapability().equals(dataRequest.getCapability())).findAny();
         if (connection.isPresent()) {
             return connection.get().execute(dataRequest);
         } else {
             return Futures.immediateFailedCheckedFuture(new UnsupportedOperationException("Connection not available !"));
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+        LOG.info("closing ...");
+        connections.values().forEach(c->{
+            try {
+                LOG.info("closing connection {}", c.getId());
+                c.close();
+            } catch (Exception e) {
+                LOG.warn("closing connection {} has failed !", c.getId());
+            }
+        });
     }
 
 }

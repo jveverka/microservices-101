@@ -9,10 +9,22 @@ import org.slf4j.LoggerFactory;
 
 public class NotificationServiceImpl extends NotificationServiceGrpc.NotificationServiceImplBase {
 
-    final private static Logger LOG = LoggerFactory.getLogger(NotificationServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(NotificationServiceImpl.class);
+
+    private final BackendServiceImpl backendService;
+
+    public NotificationServiceImpl(BackendServiceImpl backendService) {
+        this.backendService = backendService;
+    }
 
     public void onNewBackend(BackendInfo request, StreamObserver<Empty> responseObserver) {
         LOG.info("onNewBackend: {} {}:{}", request.getId(), request.getHostname(), request.getPort());
+        try {
+            backendService.connect(request.getId(), request.getHostname(), request.getPort());
+            LOG.info("Backend service connected {} {}:{}", request.getId(), request.getHostname(), request.getPort());
+        } catch (Exception e) {
+            LOG.error("Backend service connection has failed !");
+        }
         responseObserver.onNext(Empty.newBuilder().build());
         responseObserver.onCompleted();
     }

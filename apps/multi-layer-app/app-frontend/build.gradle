@@ -12,5 +12,7 @@ repositories {
 }
 
 dependencies {
+    compile 'io.undertow:undertow-core:2.0.23.Final'
     compile 'com.beust:jcommander:1.72'
+    compile 'com.google.protobuf:protobuf-java-util:3.3.0'
 }

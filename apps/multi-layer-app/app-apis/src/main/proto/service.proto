@@ -30,6 +30,10 @@ message BackendInfo {
     string capability = 4;
 }
 
+message BackendInfos {
+    repeated BackendInfo infos = 1;
+}
+
 message DataContainer {
     string typeId = 1; // data type unique ID
     bytes data = 2;    // generic byte array
