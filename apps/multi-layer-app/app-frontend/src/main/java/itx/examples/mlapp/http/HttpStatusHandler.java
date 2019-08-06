@@ -21,6 +21,7 @@ public class HttpStatusHandler implements HttpHandler {
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
         Collection<BackendInfo> status = backendService.getStatus();
+        exchange.setStatusCode(200);
         exchange.getResponseSender().send(AppUtils.renderToJson(status));
     }
 }

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -18,8 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ManagerConnector implements AutoCloseable {
 
-    final private static Logger LOG = LoggerFactory.getLogger(ManagerConnector.class);
-    final private static int MAX_RECONNECTION_ATTEMPTS = 20;
+    private static final Logger LOG = LoggerFactory.getLogger(ManagerConnector.class);
+    private static final int MAX_RECONNECTION_ATTEMPTS = 20;
 
     private final ExecutorService executorService;
     private final String managerHost;
@@ -72,7 +71,6 @@ public class ManagerConnector implements AutoCloseable {
                 Optional<Empty> confirmation = observer.awaitForValue(5, TimeUnit.SECONDS);
                 if (confirmation.isPresent()) {
                     managedChannel.awaitTermination(1, TimeUnit.SECONDS);
-                    //LOG.info("confirmation: {}", confirmation.get().getResult());
                     LOG.info("Frontent manager {}:{} worker notification send !", managerHost, managerPort);
                 } else {
                     reschedule();
@@ -86,6 +84,7 @@ public class ManagerConnector implements AutoCloseable {
             try {
                 Thread.sleep(5_000);
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
             int counterValue = counter.getAndIncrement();
             if (counterValue >= MAX_RECONNECTION_ATTEMPTS) {

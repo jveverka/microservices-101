@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.UUID;
 
+import static itx.examples.mlapp.apis.Constants.BACKEND_DEFAULT_GRPC_PORT;
+import static itx.examples.mlapp.apis.Constants.FRONTEND_DEFAULT_GRPC_PORT;
+
 public class BackendApp {
 
     private static final Logger LOG = LoggerFactory.getLogger(BackendApp.class);
-
-    public static final int FRONTEND_DEFAULT_PORT = 5556;
-    public static final int BACKEND_DEFAULT_PORT = 5555;
 
     public static void main(String[] args) throws InterruptedException, IOException {
         Arguments arguments = new Arguments();
@@ -34,12 +34,12 @@ public class BackendApp {
         DataServiceImpl dataService =
                 new DataServiceImpl(id, arguments.getSelfAddress(), arguments.getPort(), arguments.getCapability());
         ManagerConnector managerConnector =
-                new ManagerConnector(id, arguments.getManagerAddress(), FRONTEND_DEFAULT_PORT, arguments.getCapability(),
-                        arguments.getSelfAddress(), BACKEND_DEFAULT_PORT);
+                new ManagerConnector(id, arguments.getManagerAddress(), FRONTEND_DEFAULT_GRPC_PORT, arguments.getCapability(),
+                        arguments.getSelfAddress(), BACKEND_DEFAULT_GRPC_PORT);
         managerConnector.startManagerConnectionLoop();
 
         Server server = NettyServerBuilder.forAddress(
-                new InetSocketAddress(arguments.getSelfAddress(), BACKEND_DEFAULT_PORT))
+                new InetSocketAddress(arguments.getSelfAddress(), BACKEND_DEFAULT_GRPC_PORT))
                 .addService(dataService)
                 .build();
 

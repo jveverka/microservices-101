@@ -29,6 +29,7 @@ public class DataServiceImpl extends DataServiceGrpc.DataServiceImplBase {
         this.capability = capability;
     }
 
+    @Override
     public void getData(DataRequest request, StreamObserver<DataResponse> responseObserver) {
         LOG.info("getData: {}", request.getCapability());
         ByteString byteString = ByteString.copyFrom("response", Charset.forName("UTF-8"));
@@ -44,6 +45,7 @@ public class DataServiceImpl extends DataServiceGrpc.DataServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
     public void getInfo(Empty request, StreamObserver<BackendInfo> responseObserver) {
         LOG.info("getInfo: ");
         BackendInfo backendInfo = BackendInfo.newBuilder()

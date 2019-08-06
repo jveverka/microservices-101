@@ -3,11 +3,9 @@ package itx.examples.mlapp;
 import io.grpc.Server;
 import io.grpc.netty.NettyServerBuilder;
 import io.undertow.Undertow;
-import io.undertow.server.HttpHandler;
-import io.undertow.server.HttpServerExchange;
 import io.undertow.server.RoutingHandler;
-import io.undertow.util.Headers;
-import itx.examples.mlapp.http.HttpExecHandler;
+import io.undertow.server.handlers.BlockingHandler;
+import itx.examples.mlapp.http.BlockingExecHandler;
 import itx.examples.mlapp.http.HttpStatusHandler;
 import itx.examples.mlapp.services.BackendServiceImpl;
 import itx.examples.mlapp.services.ConnectionFactory;
@@ -19,12 +17,13 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import static itx.examples.mlapp.apis.Constants.DEFAULT_BIND_ADDRESS;
+import static itx.examples.mlapp.apis.Constants.FRONTEND_DEFAULT_GRPC_PORT;
+import static itx.examples.mlapp.apis.Constants.FRONTEND_DEFAULT_HTTP_PORT;
+
 public class FrontendApp {
 
     private static final Logger LOG = LoggerFactory.getLogger(FrontendApp.class);
-    public static final int FRONTEND_DEFAULT_GRPC_PORT = 5556;
-    public static final int FRONTEND_DEFAULT_HTTP_PORT = 8080;
-    public static final String DEFAULT_BIND_ADDRESS = "0.0.0.0";
 
     public static void main(String[] args) throws InterruptedException, IOException {
 
@@ -41,7 +40,7 @@ public class FrontendApp {
 
         RoutingHandler routingHandler = new RoutingHandler()
                 .get("/status", new HttpStatusHandler(backendService))
-                .post("/exec", new HttpExecHandler(backendService));
+                .post("/exec", new BlockingHandler(new BlockingExecHandler(backendService)));
 
         Undertow undertowServer = Undertow.builder()
                 .addHttpListener(FRONTEND_DEFAULT_HTTP_PORT, DEFAULT_BIND_ADDRESS)
