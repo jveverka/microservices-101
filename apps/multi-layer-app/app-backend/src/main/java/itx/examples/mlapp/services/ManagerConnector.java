@@ -3,6 +3,7 @@ package itx.examples.mlapp.services;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import itx.examples.mlapp.apis.BlockingObserver;
+import itx.examples.mlapp.service.BackendId;
 import itx.examples.mlapp.service.BackendInfo;
 import itx.examples.mlapp.service.Confirmation;
 import itx.examples.mlapp.service.NotificationServiceGrpc;
@@ -24,12 +25,12 @@ public class ManagerConnector implements AutoCloseable {
     private final String managerHost;
     private final int managerPort;
     private final String capability;
-    private final String id;
+    private final BackendId id;
     private final String selfHostName;
     private final int selfPort;
     private final AtomicInteger counter;
 
-    public ManagerConnector(String id, String managerHost, int managerPort, String capability, String selfHostName, int selfPort) {
+    public ManagerConnector(BackendId id, String managerHost, int managerPort, String capability, String selfHostName, int selfPort) {
         this.executorService = Executors.newSingleThreadExecutor();
         this.managerHost = managerHost;
         this.managerPort = managerPort;
@@ -91,6 +92,7 @@ public class ManagerConnector implements AutoCloseable {
                     managedChannel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
                 } catch (InterruptedException e) {
                     LOG.error("Exception: ", e);
+                    Thread.currentThread().interrupt();
                 }
             }
             try {

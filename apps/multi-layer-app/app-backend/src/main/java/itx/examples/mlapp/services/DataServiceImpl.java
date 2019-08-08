@@ -2,6 +2,7 @@ package itx.examples.mlapp.services;
 
 import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
+import itx.examples.mlapp.service.BackendId;
 import itx.examples.mlapp.service.BackendInfo;
 import itx.examples.mlapp.service.DataContainer;
 import itx.examples.mlapp.service.DataRequest;
@@ -17,12 +18,12 @@ public class DataServiceImpl extends DataServiceGrpc.DataServiceImplBase {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataServiceImpl.class);
 
-    private final String id;
+    private final BackendId id;
     private final String hostname;
     private final int port;
     private final String capability;
 
-    public DataServiceImpl(String id, String hostname, int port, String capability) {
+    public DataServiceImpl(BackendId id, String hostname, int port, String capability) {
         this.id = id;
         this.hostname = hostname;
         this.port = port;

@@ -3,6 +3,7 @@ package itx.examples.mlapp.services;
 import io.grpc.stub.StreamObserver;
 import itx.examples.mlapp.service.BackendInfo;
 import itx.examples.mlapp.service.Confirmation;
+import itx.examples.mlapp.service.ConnectRequest;
 import itx.examples.mlapp.service.NotificationServiceGrpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,15 @@ public class NotificationServiceImpl extends NotificationServiceGrpc.Notificatio
         this.backendService = backendService;
     }
 
+    @Override
     public void onNewBackend(BackendInfo request, StreamObserver<Confirmation> responseObserver) {
         LOG.info("onNewBackend: {} {}:{}", request.getId(), request.getHostname(), request.getPort());
         try {
-            backendService.connect(request.getId(), request.getHostname(), request.getPort());
+            ConnectRequest connectRequest = ConnectRequest.newBuilder()
+                    .setHostname(request.getHostname())
+                    .setPort(request.getPort())
+                    .build();
+            backendService.connect(connectRequest);
             Confirmation confirmation = Confirmation.newBuilder()
                     .setStatus(true)
                     .setMessage("connection accepted")

@@ -1,7 +1,9 @@
 package itx.examples.mlapp.services;
 
 import com.google.common.util.concurrent.Futures;
+import itx.examples.mlapp.service.BackendId;
 import itx.examples.mlapp.service.BackendInfo;
+import itx.examples.mlapp.service.ConnectRequest;
 import itx.examples.mlapp.service.DataRequest;
 import itx.examples.mlapp.service.DataResponse;
 import org.slf4j.Logger;
@@ -18,7 +20,7 @@ public class BackendServiceImpl implements BackendManager, TaskManager, AutoClos
 
     private static final Logger LOG = LoggerFactory.getLogger(BackendServiceImpl.class);
 
-    private final Map<String, Connection> connections;
+    private final Map<BackendId, Connection> connections;
     private final ConnectionFactory connectionFactory;
 
     public BackendServiceImpl(ConnectionFactory connectionFactory) {
@@ -27,10 +29,12 @@ public class BackendServiceImpl implements BackendManager, TaskManager, AutoClos
     }
 
     @Override
-    public void connect(String backendId, String host, int port) throws Exception {
-        Connection connection = connectionFactory.createConnect(backendId, host, port);
-        LOG.info("connect: id={} capability={} {}:{}", connection.getBackendInfo().getCapability(), backendId, host, port);
-        connections.put(backendId, connection);
+    public BackendId connect(ConnectRequest request) throws Exception {
+        Connection connection = connectionFactory.createConnect(request.getHostname(), request.getPort());
+        LOG.info("connect: id={} capability={} {}:{}", connection.getId().getId(), connection.getBackendInfo().getCapability(),
+                request.getHostname(), request.getPort());
+        connections.put(connection.getId(), connection);
+        return connection.getId();
     }
 
     @Override
@@ -39,9 +43,9 @@ public class BackendServiceImpl implements BackendManager, TaskManager, AutoClos
     }
 
     @Override
-    public void disconnect(String backendId) {
-        LOG.info("disconnect: {}", backendId);
-        Connection connection = connections.remove(backendId);
+    public void disconnect(BackendId id) {
+        LOG.info("disconnect: {}", id.getId());
+        Connection connection = connections.remove(id);
         if (connection != null) {
             try {
                 connection.close();

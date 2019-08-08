@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import io.grpc.Server;
 import io.grpc.netty.NettyServerBuilder;
 import itx.examples.mlapp.config.Arguments;
+import itx.examples.mlapp.service.BackendId;
 import itx.examples.mlapp.services.DataServiceImpl;
 import itx.examples.mlapp.services.ManagerConnector;
 import org.slf4j.Logger;
@@ -27,12 +28,14 @@ public class BackendApp {
                 .build()
                 .parse(args);
 
-        String id = UUID.randomUUID().toString();
+        BackendId id =  BackendId.newBuilder()
+                .setId(UUID.randomUUID().toString())
+                .build();
         LOG.info("BackendApp started id={} capability={} {}:{} ...",
                 id, arguments.getCapability(), arguments.getSelfAddress(), arguments.getPort());
 
         for(InetAddress addr : InetAddress.getAllByName(arguments.getManagerAddress())) {
-            LOG.info("Resolved manager address: ", addr.getHostAddress());
+            LOG.info("Resolved manager address: {}", addr.getHostAddress());
         }
 
         DataServiceImpl dataService =

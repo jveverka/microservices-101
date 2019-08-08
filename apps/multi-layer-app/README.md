@@ -28,7 +28,11 @@ docker save --output="app-backend/build/app-backend:1.0.0-SNAPSHOT.tar" app-back
   ``curl -d '{ "id": 1234, "data": { "typeId": "java.lang.String", "data": "xxx" }, "capability": "super" }' -X POST http://127.0.0.1:8080/exec``
 * get capabilities of multi-layer app  
   ``curl -X GET http://127.0.0.1:8080/capabilities``
-
+* connect backend instance
+  ``curl -d '{ "hostname": "host-name", "port": 1234 }' -X POST http://127.0.0.1:8080/connect``
+* disconnect backend instance  
+  ``curl -d '{ "id": "the-id" }' -X POST http://127.0.0.1:8080/disconnect``
+  
 ### k8s deployment
 * Deploy one frontend layer and multiple backend layers. 
 * One backend layer has 'super' capability, the other one has 'hyper' capability.

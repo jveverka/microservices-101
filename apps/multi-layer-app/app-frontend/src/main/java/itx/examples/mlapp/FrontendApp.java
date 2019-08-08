@@ -5,6 +5,8 @@ import io.grpc.netty.NettyServerBuilder;
 import io.undertow.Undertow;
 import io.undertow.server.RoutingHandler;
 import io.undertow.server.handlers.BlockingHandler;
+import itx.examples.mlapp.http.BlockingConnectHandler;
+import itx.examples.mlapp.http.BlockingDisconnectHandler;
 import itx.examples.mlapp.http.BlockingExecHandler;
 import itx.examples.mlapp.http.CapabilitiesHandler;
 import itx.examples.mlapp.http.StatusHandler;
@@ -42,7 +44,9 @@ public class FrontendApp {
         RoutingHandler routingHandler = new RoutingHandler()
                 .get("/status", new StatusHandler(backendService))
                 .get("/capabilities", new CapabilitiesHandler(backendService))
-                .post("/exec", new BlockingHandler(new BlockingExecHandler(backendService)));
+                .post("/exec", new BlockingHandler(new BlockingExecHandler(backendService)))
+                .post("/connect", new BlockingHandler(new BlockingConnectHandler(backendService)))
+                .post("/disconnect", new BlockingHandler(new BlockingDisconnectHandler(backendService)));
 
         Undertow undertowServer = Undertow.builder()
                 .addHttpListener(FRONTEND_DEFAULT_HTTP_PORT, DEFAULT_BIND_ADDRESS)

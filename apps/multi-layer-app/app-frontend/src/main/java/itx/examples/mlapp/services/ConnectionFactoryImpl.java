@@ -17,9 +17,9 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
     private static final Logger LOG = LoggerFactory.getLogger(ConnectionFactoryImpl.class);
 
     @Override
-    public Connection createConnect(String backendId, String host, int port) throws ConnectionCreateException {
+    public Connection createConnect(String host, int port) throws ConnectionCreateException {
         try {
-            LOG.info("createConnect: {} {}:{}", backendId, host, port);
+            LOG.info("createConnect: {}:{}", host, port);
             ManagedChannel managedChannel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
                 .build();
@@ -29,12 +29,12 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
             Optional<BackendInfo> backendInfo = null;
             backendInfo = blockingObserver.awaitForValue(10, TimeUnit.SECONDS);
             if (backendInfo.isPresent()) {
-                LOG.info("connection created: {} {}:{}", backendId, host, port);
+                LOG.info("connection created: {} {}:{}", backendInfo.get().getId(), host, port);
                 return new ConnectionImpl(backendInfo.get(), managedChannel, dataServiceStub);
             } else {
                 managedChannel.shutdown();
             }
-            LOG.info("Connection failed for: {} {}:{}", backendId, host, port);
+            LOG.info("Connection failed for {}:{}", host, port);
             throw new ConnectionCreateException("Connection failed");
         } catch (Exception e) {
             throw new ConnectionCreateException(e);

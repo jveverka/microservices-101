@@ -2,6 +2,7 @@ package itx.examples.mlapp.services;
 
 import io.grpc.ManagedChannel;
 import itx.examples.mlapp.apis.BlockingObserver;
+import itx.examples.mlapp.service.BackendId;
 import itx.examples.mlapp.service.BackendInfo;
 import itx.examples.mlapp.service.DataRequest;
 import itx.examples.mlapp.service.DataResponse;
@@ -30,7 +31,7 @@ public class ConnectionImpl implements Connection {
     }
 
     @Override
-    public String getId() {
+    public BackendId getId() {
         return backendInfo.getId();
     }
 
