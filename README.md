@@ -2,26 +2,28 @@
 [![Build Status](https://travis-ci.org/jveverka/microservices-101.svg?branch=master)](https://travis-ci.org/jveverka/microservices-101)
 
 # Microservices 101
-This project is designed to demonstrate building blocks of microservice systems and provide 
-hands-on examples of various microservice deployment scenarios for [kubernetes](https://kubernetes.io/) 
+This training demo is designed to demonstrate building blocks of microservice systems and provide 
+hands-on examples of various microservice deployment scenarios for [kubernetes](https://kubernetes.io/). 
 All examples are tailored for training and better understanding of distributed microservice systems.
 
-## Example services
-Some simple examples to practice micro-service deployments. 
-* [Simple REST service](apps/service-simple-rest) - java11, [SpringBoot](https://spring.io/projects/spring-boot), http/REST 
-* [Application cluster](apps/akka-k8s-cluster) for kubernetes - java11, [Akka](https://akka.io/), TCP, http/REST
-* [Multi layer app](apps/multi-layer-app) - microservice app deployment, frontend, backend, [gRPC](https://grpc.io/), http/REST
-* [Busybox test app](apps/busybox) - pod used to test DNS, and service availability from within the pod.
-
-## Kubernetes cluster
+## 1. Setup Kubernetes cluster
 To deploy example services, kubernetes cluster is required. 
 [This manual](docs/kubernetes/README.md) based on official kubernetes documentation describes 
-how to setup private on-premises k8s cluster for practicing deployments. 
+how to setup private on-premises k8s cluster for practicing deployments of example services below. 
 
-## Build all example apps
-Builds all example java services.
+## 2. Build example services
+To build all example java applications, run command. 
+Please make sure that your [environment is setup](docs/environment-setup.md) properly.
 ```
 gradle clean build installDist 
 ```
 
-Enjoy !
+## 3. Learn to deploy example services
+Simple example services (applications) to practice micro-service deployments into k8s cluster. 
+Follow each example exercise to get hands-on experience with k8s deployments. 
+* __Example 1:__ [Simple REST service](apps/service-simple-rest) - java11, [SpringBoot](https://spring.io/projects/spring-boot), http/REST 
+* __Example 2:__ [Busybox test app](apps/busybox) - pod used to test DNS, and service availability from within the pod.
+* __Example 3:__ [Application cluster](apps/akka-k8s-cluster) for kubernetes - java11, [Akka](https://akka.io/), TCP, http/REST
+* __Example 4:__ [Multi layer app](apps/multi-layer-app) - microservice app deployment, frontend, backend, [gRPC](https://grpc.io/), http/REST
+
+_Enjoy !_
