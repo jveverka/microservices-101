@@ -4,7 +4,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import itx.examples.mlapp.apis.BlockingObserver;
 import itx.examples.mlapp.service.BackendInfo;
-import itx.examples.mlapp.service.Empty;
+import itx.examples.mlapp.service.Confirmation;
 import itx.examples.mlapp.service.NotificationServiceGrpc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,28 +67,32 @@ public class ManagerConnector implements AutoCloseable {
                         .setHostname(selfHostName)
                         .setPort(selfPort)
                         .build();
-                BlockingObserver<Empty> observer = new BlockingObserver<>();
+                BlockingObserver<Confirmation> observer = new BlockingObserver<>();
                 notificationServiceGrpc.onNewBackend(request, observer);
-                Optional<Empty> confirmation = observer.awaitForValue(5, TimeUnit.SECONDS);
+                Optional<Confirmation> confirmation = observer.awaitForValue(5, TimeUnit.SECONDS);
                 if (confirmation.isPresent()) {
-                    managedChannel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
-                    LOG.info("Frontent manager {}:{} worker notification send !", managerHost, managerPort);
+                    managedChannel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+                    LOG.info("Frontent manager {}:{} worker notification send: {} {}", managerHost, managerPort,
+                            confirmation.get().getStatus(), confirmation.get().getMessage());
                 } else {
                     LOG.info("Confirmation not present, rescheduling ...");
-                    reschedule();
+                    reschedule(managedChannel);
                 }
             } catch (Exception e) {
-                LOG.error("Exception: ", e);
-                reschedule();
-            } finally {
-                if (managedChannel != null) {
-                    LOG.info("shutting down managed channel");
-                    managedChannel.shutdown();
-                }
+                LOG.error("Connection task exception: ", e);
+                reschedule(managedChannel);
             }
         }
 
-        private void reschedule() {
+        private void reschedule(ManagedChannel managedChannel) {
+            if (managedChannel != null) {
+                LOG.info("shutting down managed channel");
+                try {
+                    managedChannel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    LOG.error("Exception: ", e);
+                }
+            }
             try {
                 Thread.sleep(5_000);
             } catch (InterruptedException e) {

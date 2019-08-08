@@ -9,7 +9,7 @@ service DataService {
 }
 
 service NotificationService {
-    rpc OnNewBackend(BackendInfo) returns (Empty) {}
+    rpc OnNewBackend(BackendInfo) returns (Confirmation) {}
 }
 
 message DataRequest {
@@ -38,6 +38,11 @@ message BackendInfos {
 message DataContainer {
     string typeId = 1; // data type unique ID
     bytes data = 2;    // generic byte array
+}
+
+message Confirmation {
+    bool status = 1;
+    string message = 2;
 }
 
 message Empty {

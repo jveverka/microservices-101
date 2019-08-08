@@ -10,11 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.UUID;
 
 import static itx.examples.mlapp.apis.Constants.BACKEND_DEFAULT_GRPC_PORT;
-import static itx.examples.mlapp.apis.Constants.FRONTEND_DEFAULT_GRPC_PORT;
 
 public class BackendApp {
 
@@ -31,12 +31,15 @@ public class BackendApp {
         LOG.info("BackendApp started id={} capability={} {}:{} ...",
                 id, arguments.getCapability(), arguments.getSelfAddress(), arguments.getPort());
 
+        for(InetAddress addr : InetAddress.getAllByName(arguments.getManagerAddress())) {
+            LOG.info("Resolved manager address: ", addr.getHostAddress());
+        }
+
         DataServiceImpl dataService =
                 new DataServiceImpl(id, arguments.getSelfAddress(), arguments.getPort(), arguments.getCapability());
         ManagerConnector managerConnector =
                 new ManagerConnector(id, arguments.getManagerAddress(), arguments.getManagerPort(), arguments.getCapability(),
                         arguments.getSelfAddress(), BACKEND_DEFAULT_GRPC_PORT);
-        managerConnector.startManagerConnectionLoop();
 
         Server server = NettyServerBuilder.forAddress(
                 new InetSocketAddress(arguments.getSelfAddress(), BACKEND_DEFAULT_GRPC_PORT))
@@ -59,6 +62,7 @@ public class BackendApp {
 
         LOG.info("BackendApp, listening on {}:{}", arguments.getSelfAddress(), arguments.getPort());
         server.start();
+        managerConnector.startManagerConnectionLoop();
         server.awaitTermination();
     }
 
