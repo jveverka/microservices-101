@@ -7,6 +7,7 @@ import itx.examples.mlapp.service.BackendInfo;
 import itx.examples.mlapp.service.DataRequest;
 import itx.examples.mlapp.service.DataResponse;
 import itx.examples.mlapp.service.DataServiceGrpc;
+import itx.examples.mlapp.service.Empty;
 
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -37,7 +38,7 @@ public class ConnectionImpl implements Connection {
 
     @Override
     public Future<DataResponse> execute(DataRequest dataRequest) {
-        Task task = new Task(dataServiceStub, dataRequest);
+        Task task = new Task(dataRequest);
         return executor.submit(task);
     }
 
@@ -47,24 +48,33 @@ public class ConnectionImpl implements Connection {
     }
 
     @Override
+    public Optional<BackendInfo> sendKeepAlive() {
+        BlockingObserver<BackendInfo> backendInfoBlockingObserver = new BlockingObserver<>();
+        dataServiceStub.getInfo(Empty.newBuilder().build(), backendInfoBlockingObserver);
+        try {
+            return backendInfoBlockingObserver.awaitForValue(2, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public void close() throws Exception {
         this.managedChannel.shutdown().awaitTermination(10, TimeUnit.SECONDS);
     }
 
-    private static class Task implements Callable<DataResponse> {
+    private class Task implements Callable<DataResponse> {
 
-        private final DataServiceGrpc.DataServiceStub dataServiceStub;
         private final DataRequest dataRequest;
 
-        private Task(DataServiceGrpc.DataServiceStub dataServiceStub, DataRequest dataRequest) {
-            this.dataServiceStub = dataServiceStub;
+        private Task(DataRequest dataRequest) {
             this.dataRequest = dataRequest;
         }
 
         @Override
         public DataResponse call() throws Exception {
             BlockingObserver<DataResponse> blockingObserver = new BlockingObserver<>();
-            dataServiceStub.getData(dataRequest, blockingObserver);
+            ConnectionImpl.this.dataServiceStub.getData(dataRequest, blockingObserver);
             Optional<DataResponse> dataResponse = blockingObserver.awaitForValue(10, TimeUnit.SECONDS);
             return dataResponse.orElseThrow();
         }

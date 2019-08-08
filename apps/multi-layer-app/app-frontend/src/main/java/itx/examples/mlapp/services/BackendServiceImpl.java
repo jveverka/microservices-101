@@ -10,10 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 public class BackendServiceImpl implements BackendManager, TaskManager, AutoCloseable {
@@ -22,10 +25,13 @@ public class BackendServiceImpl implements BackendManager, TaskManager, AutoClos
 
     private final Map<BackendId, Connection> connections;
     private final ConnectionFactory connectionFactory;
+    private final ExecutorService executor;
 
     public BackendServiceImpl(ConnectionFactory connectionFactory) {
         this.connections = new ConcurrentHashMap<>();
         this.connectionFactory = connectionFactory;
+        this.executor = Executors.newSingleThreadExecutor();
+        this.executor.submit(new KeepAliveTask());
     }
 
     @Override
@@ -69,6 +75,7 @@ public class BackendServiceImpl implements BackendManager, TaskManager, AutoClos
     @Override
     public void close() throws Exception {
         LOG.info("closing ...");
+        executor.shutdown();
         connections.values().forEach(c->{
             try {
                 LOG.info("closing connection {}", c.getId());
@@ -77,6 +84,26 @@ public class BackendServiceImpl implements BackendManager, TaskManager, AutoClos
                 LOG.warn("closing connection {} has failed !", c.getId());
             }
         });
+    }
+
+    private class KeepAliveTask implements Runnable {
+        @Override
+        public void run() {
+            LOG.info("checking connections ...");
+            Collection<Connection> conns = Collections.unmodifiableCollection(BackendServiceImpl.this.connections.values());
+            for (Connection connection: conns) {
+                if (!connection.sendKeepAlive().isPresent()) {
+                    LOG.info("Evicting connection: {}", connection.getId().getId(), connection.getBackendInfo().getHostname(), connection.getBackendInfo().getPort());
+                    BackendServiceImpl.this.connections.remove(connection.getId());
+                }
+            }
+            try {
+                Thread.sleep(10_000);
+                BackendServiceImpl.this.executor.submit(new KeepAliveTask());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 
 }
