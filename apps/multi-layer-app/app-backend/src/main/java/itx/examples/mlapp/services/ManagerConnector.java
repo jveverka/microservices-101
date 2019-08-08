@@ -87,9 +87,13 @@ public class ManagerConnector implements AutoCloseable {
 
         private void reschedule(ManagedChannel managedChannel) {
             if (managedChannel != null) {
-                LOG.info("shutting down managed channel");
                 try {
-                    managedChannel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+                    LOG.info("shutting down managed channel");
+                    boolean terminated = false;
+                    while (!terminated) {
+                        terminated = managedChannel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+                    }
+                    LOG.info("managed channel terminated={}", terminated);
                 } catch (InterruptedException e) {
                     LOG.error("Exception: ", e);
                     Thread.currentThread().interrupt();

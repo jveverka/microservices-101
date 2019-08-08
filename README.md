@@ -5,9 +5,9 @@ All examples are tailored for training and better understanding of distributed m
 
 ## Example services
 Some simple examples to practice micro-service deployments. 
-* [Simple REST service](apps/service-simple-rest) - java11, [SpringBoot](https://spring.io/projects/spring-boot)
-* [Application cluster](apps/akka-k8s-cluster) for kubernetes - java11, [Akka](https://akka.io/)
-* [Multi layer app](apps/multi-layer-app) - microservice app deployment, frontend, backend, [gRPC](https://grpc.io/)
+* [Simple REST service](apps/service-simple-rest) - java11, [SpringBoot](https://spring.io/projects/spring-boot), http/REST 
+* [Application cluster](apps/akka-k8s-cluster) for kubernetes - java11, [Akka](https://akka.io/), TCP, http/REST
+* [Multi layer app](apps/multi-layer-app) - microservice app deployment, frontend, backend, [gRPC](https://grpc.io/), http/REST
 * [Busybox test app](apps/busybox) - pod used to test DNS, and service availability from within the pod.
 
 ## Kubernetes cluster
