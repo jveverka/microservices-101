@@ -14,11 +14,19 @@ subprojects {
     }
 }
 
-project(':service-simple-rest') {
+project(':app-apis') {
 }
 
-project(':akka-k8s-cluster') {
+project(':app-backend') {
+    dependencies {
+        compile project(':app-apis')
+    }
 }
 
-project(':multi-layer-app') {
+project(':app-frontend') {
+    dependencies {
+        compile project(':app-apis')
+    }
 }
+
+println  "  rootDir:      ${project.rootDir}"

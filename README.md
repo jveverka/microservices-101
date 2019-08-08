@@ -16,8 +16,9 @@ To deploy example services, kubernetes cluster is required.
 how to setup private on-premises k8s cluster for practicing deployments. 
 
 ## Build all example apps
-``
-gradle clean installDist 
-``
+Builds all example java services.
+```
+gradle clean build installDist 
+```
 
 Enjoy !
