@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build Status](https://travis-ci.org/jveverka/microservices-101.svg?branch=master)](https://travis-ci.org/jveverka/microservices-101)
+
 # Microservices 101
 This project is designed to demonstrate building blocks of microservice systems and provide 
 hands-on examples of various microservice deployment scenarios for [kubernetes](https://kubernetes.io/) 
