@@ -48,7 +48,9 @@ kubectl apply -f app-backend-super-deployment.yaml
 # deploy backend layer with 'hyper' capability
 kubectl apply -f app-backend-hyper-deployment.yaml 
 ```
-Horizontal up/down scaling: Only backend deployments are designed for horizontal scaling !
+#### Horizontal up/down scaling 
+__WARNING__: Only backend deployments are designed for horizontal scaling !
+Do not scale frontend deployment.
 ```
 # scale up
 kubectl scale deployment app-backend-super --replicas=5
@@ -59,15 +61,15 @@ kubectl scale deployment app-backend-super --replicas=2
 kubectl scale deployment app-backend-hyper --replicas=2
 ```
 
-Undeploy multi-layer application
+#### Undeploy multi-layer application
 ```
 # undeploy frontend layer
 kubectl delete service/app-frontend-grpc-lb service/app-frontend-http-lb deployment.apps/app-frontend
 
 # undeploy backend layer with 'super' capability
-kubectl delete deployment.apps/app-backend-super service/app-backend-super
+kubectl delete deployment.apps/app-backend-super
 
 # undeploy backend layer with 'hyper' capability
-kubectl delete deployment.apps/app-backend-hyper service/app-backend-hyper
+kubectl delete deployment.apps/app-backend-hyper
 ```
 

@@ -1,17 +1,4 @@
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: app-backend-hyper
-spec:
-  selector:
-    app: app-backend-hyper
-  ports:
-    - protocol: TCP
-      port: 5555
-      targetPort: 5555
-  type: ClusterIP
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,6 +35,8 @@ spec:
                   fieldPath: spec.nodeName
             - name: FRONTEND_HOSTNAME
               value: "app-frontend-grpc-lb.default.svc.cluster.local"
+            - name: FRONTEND_PORT
+              value: "5556"
             - name: CAPABILITY
               value: "hyper"
           ports:
