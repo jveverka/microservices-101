@@ -5,6 +5,6 @@ java -version
 hostname
 echo "HOSTNAME=${HOSTNAME}"
 
-/kafka_2.11-2.3.0/bin/zookeeper-server-start.sh /kafka_2.11-2.3.0/config/zookeeper.properties &>/kafka_2.11-2.3.0/zookeeper.log &
+${KAFKA_HOME}/bin/zookeeper-server-start.sh ${KAFKA_HOME}/config/zookeeper.properties &>${KAFKA_HOME}/zookeeper.log &
 echo "zookeeper started"
-/kafka_2.11-2.3.0/bin/kafka-server-start.sh /kafka_2.11-2.3.0/config/server.properties
+${KAFKA_HOME}/bin/kafka-server-start.sh ${KAFKA_HOME}/config/server.properties
