@@ -11,4 +11,5 @@ When building microservice architecture and deployment, typically following feat
 | circuit braker              | [resilience4j](https://github.com/resilience4j/resilience4j) |
 | service discovery, mesh     | [consul](https://www.consul.io/)                             |
 | service mesh                | [istio](https://istio.io/)                                   |
+| spring native               | [SpringCloud](https://spring.io/projects/spring-cloud)       |
 
