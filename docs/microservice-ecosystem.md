@@ -9,5 +9,6 @@ When building microservice architecture and deployment, typically following feat
 | infra monitoring            | [prometheus](https://prometheus.io/)                         |
 | infra visibility            | [grafana](https://grafana.com/)                              |
 | circuit braker              | [resilience4j](https://github.com/resilience4j/resilience4j) |
-| service discovery           | []() |
+| service discovery, mesh     | [consul](https://www.consul.io/)                             |
+| service mesh                | [istio](https://istio.io/)                                   |
 
