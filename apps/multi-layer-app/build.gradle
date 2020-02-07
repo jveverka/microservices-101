@@ -9,8 +9,8 @@ subprojects {
     }
 
     dependencies {
-        compile 'org.slf4j:slf4j-api:1.8.0-beta2'
-        compile 'org.slf4j:slf4j-simple:1.8.0-beta2'
+        implementation 'org.slf4j:slf4j-api:1.8.0-beta2'
+        implementation 'org.slf4j:slf4j-simple:1.8.0-beta2'
     }
 }
 
@@ -19,13 +19,13 @@ project(':app-apis') {
 
 project(':app-backend') {
     dependencies {
-        compile project(':app-apis')
+        implementation project(':app-apis')
     }
 }
 
 project(':app-frontend') {
     dependencies {
-        compile project(':app-apis')
+        implementation project(':app-apis')
     }
 }
 
