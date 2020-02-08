@@ -2,7 +2,7 @@ dist: bionic
 language: java
 jdk:
   - openjdk11
-before_script:
+before_install:
   - pwd
   - wget https://services.gradle.org/distributions/gradle-6.1.1-bin.zip
   - unzip gradle-6.1.1-bin.zip
