@@ -1,5 +1,5 @@
 # Kubernetes cluster setup
-How to setup kubernetes cluster. This 10-minute guide is crafted for Ubuntu Server 18.04.2 LTS based on [this](https://www.linuxtechi.com/install-configure-kubernetes-ubuntu-18-04-ubuntu-18-10/) and
+How to setup kubernetes cluster. This 10-minute guide is crafted for Ubuntu Server 18.04.4 LTS based on [this](https://www.linuxtechi.com/install-configure-kubernetes-ubuntu-18-04-ubuntu-18-10/) and
 [this](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network) manuals.
 
 ### Network topology
@@ -23,7 +23,7 @@ In case running all 3 nodes as VMs on VirtualBox, following setup is recommended
 
 ### Execute on all nodes
 This is basic node setup for all kubernetes cluster nodes (master and all workers).
-Assuming bare Ubuntu Server 18.04.2 LTS was installed with ssh server.
+Assuming bare Ubuntu Server 18.04.4 LTS was installed with ssh server.
 ```
 sudo apt-get install docker.io -y
 sudo systemctl start docker
