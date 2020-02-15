@@ -1,10 +1,12 @@
 include "service-simple-rest"
 include "akka-k8s-cluster"
 include "multi-layer-app"
+include "consul-app"
 
 project(':service-simple-rest').projectDir = new File('apps/service-simple-rest')
 project(':akka-k8s-cluster').projectDir = new File('apps/akka-k8s-cluster')
 project(':multi-layer-app').projectDir = new File('apps/multi-layer-app')
+project(':consul-app').projectDir = new File('apps/consul-app')
 
 include "app-apis"
 include "app-backend"
@@ -12,3 +14,6 @@ include "app-frontend"
 project(':app-apis').projectDir = new File('apps/multi-layer-app/app-apis')
 project(':app-backend').projectDir = new File('apps/multi-layer-app/app-backend')
 project(':app-frontend').projectDir = new File('apps/multi-layer-app/app-frontend')
+
+include "consul-frontend"
+project(':consul-frontend').projectDir = new File('apps/consul-app/consul-frontend')

@@ -1,0 +1,3 @@
+include "consul-frontend"
+
+project(':consul-frontend').projectDir = new File('consul-frontend')

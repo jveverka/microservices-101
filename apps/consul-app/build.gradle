@@ -14,14 +14,5 @@ subprojects {
     }
 }
 
-project(':service-simple-rest') {
-}
-
-project(':akka-k8s-cluster') {
-}
-
-project(':multi-layer-app') {
-}
-
-project(':consul-app') {
+project(':consul-frontend') {
 }
