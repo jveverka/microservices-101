@@ -7,6 +7,8 @@ spring:
         instance-id: custom-service-id
         serviceName: myprefix-${spring.application.name}
         tags: appType=frontend, appVersion=1.0.0
+        healthCheckPath: /services/health
+        healthCheckInterval: 15s
   application:
     ID: myConsulApp
     name: myConsulApp
