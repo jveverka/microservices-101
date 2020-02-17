@@ -18,7 +18,10 @@ Please make sure that your [environment is setup](docs/environment-setup.md) pro
 gradle clean build installDist 
 ```
 
-## 3. Learn to deploy example services
+## 3. Setup local docker registry
+Setup [local docker registry](docs/local-docker-registry.md) in order to deploy example applications. 
+
+## 4. Learn to deploy applications
 Simple example services (applications) to practice micro-service deployments into k8s cluster. 
 Follow each example exercise to get hands-on experience with k8s deployments. 
 * __Example 1:__ [Simple REST service](apps/service-simple-rest) - java11, [SpringBoot](https://spring.io/projects/spring-boot), http/REST 
