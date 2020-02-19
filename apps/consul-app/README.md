@@ -10,3 +10,20 @@
   ```
   ./consul agent -dev
   ```
+* create consul key/value configuration
+  ```
+  Key: /config/myConsulApp/my/prop Value: value-from-consul
+  ```
+* build project
+  ```
+  gradle clean build
+  ```  
+* start consul-frontend application
+  ```
+  java -jar consul-frontend/build/libs/consul-frontend-1.0.0-SNAPSHOT.jar 
+  ```
+* try application endpoints
+  ```
+  GET http://localhost:8080/services/data
+  GET http://localhost:8080/services/health
+  ```

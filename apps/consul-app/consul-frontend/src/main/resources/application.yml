@@ -9,6 +9,8 @@ spring:
         tags: appType=frontend, appVersion=1.0.0
         healthCheckPath: /services/health
         healthCheckInterval: 15s
+      config:
+        enabled: true
   application:
     ID: myConsulApp
     name: myConsulApp
