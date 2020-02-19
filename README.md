@@ -29,4 +29,7 @@ Follow each example exercise to get hands-on experience with k8s deployments.
 * __Example 3:__ [Application cluster](apps/akka-k8s-cluster) for kubernetes - java11, [Akka](https://akka.io/), TCP, http/REST
 * __Example 4:__ [Multi layer app](apps/multi-layer-app) - microservice app deployment, frontend, backend, [gRPC](https://grpc.io/), http/REST
 
+## 5. Explore Microservice Technologies
+Explore [microservice architectural patterns](docs/microservice-architecture.md) and [technologies](docs/microservice-ecosystem.md).
+
 _Enjoy !_
