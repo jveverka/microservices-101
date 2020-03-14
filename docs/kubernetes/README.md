@@ -12,14 +12,34 @@ This network setup is suitable for bare metal installation an well as installati
 ![network](docs/k8s-network-setup.svg)
 
 ### VirtualBox networking setup
-In case running all 3 nodes as VMs on VirtualBox, following setup is recommended:
+In case of running all 3 nodes as VMs on VirtualBox, following setup is recommended:
 * each VM has exactly one network interface
 * network adapter is setup using "Host-only adapter" vboxnet0
 * using VirtualBox global tools -> Host Network manager and make sure vboxnet0 
   network 192.168.56.1/24 is created.
 * if DHCP is on, once make sure that assigned IP addresses does not change for VMs once assigned.
 * if DHCP is off, use statically assigned IP addresses.
-* use NAT setup to provide inetrnet access for k8s nodes.
+* use NAT setup to provide internet access for k8s nodes.
+
+### KVM networking setup
+In case of running all 3 nodes as VMs on KVM, following setup is recommended:
+* each VM has exactly one network interface
+* network adapter is setup using "Virtual Network 'default' NAT" device model virtio
+* KVM default NAT network is 192.168.122.0/24
+* NAT network configuration is here:
+  ```
+  /etc/libvirt/qemu/networks/autostart/default.xml 
+  ```
+* DHCP is enabled by default on NAT network.
+* If necessary, DHCP can be forced to assign same IP addresses to VMs like this:
+  ```
+      <dhcp>
+        <range start='192.168.122.2' end='192.168.122.254'/>
+        <host mac='52:54:00:89:8d:7a' name='ubuntu-node-001' ip='192.168.122.11'/>
+        <host mac='52:54:00:f7:32:ec' name='ubuntu-node-002' ip='192.168.122.12'/>
+        <host mac='52:54:00:c9:b9:2a' name='ubuntu-node-003' ip='192.168.122.13'/>
+      </dhcp> 
+  ```  
 
 ### Execute on all nodes
 This is basic node setup for all kubernetes cluster nodes (master and all workers).

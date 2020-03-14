@@ -8,7 +8,10 @@
   ```
 * start local consul instance at [http://localhost:8500](http://127.0.0.1:8500/)
   ```
+  # start consul in development mode
   ./consul agent -dev
+  # or start single node consul server agent
+  ./consul agent -server -ui=true -bootstrap-expect=1 -bind=127.0.0.1 -data-dir=data-node-0
   ```
 * create consul key/value configuration
   ```
