@@ -24,8 +24,8 @@ targetCompatibility = 11
 def grpcVersion = '1.13.2'
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.8.0-beta2'
-    compile 'org.slf4j:slf4j-simple:1.8.0-beta2'
+    compile 'org.slf4j:slf4j-api:1.7.30'
+    compile 'org.slf4j:slf4j-simple:1.7.30'
 
     compile "com.google.api.grpc:proto-google-common-protos:1.12.0"
     compile "io.grpc:grpc-netty:${grpcVersion}"

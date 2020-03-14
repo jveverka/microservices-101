@@ -15,7 +15,7 @@ how to setup private on-premises k8s cluster for practicing deployments of examp
 To build all example java applications, run command. 
 Please make sure that your [environment is setup](docs/environment-setup.md) properly.
 ```
-gradle clean build installDist 
+gradle clean build test installDist 
 ```
 
 ## 3. Setup local docker registry
