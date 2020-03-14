@@ -1,21 +1,23 @@
+server:
+  port: 8080
 spring:
   cloud:
     consul:
       host: localhost
       port: 8500
       discovery:
-        instance-id: custom-service-id
-        serviceName: myprefix-${spring.application.name}
+        instance-id: frontend-service-id
+        serviceName: frontend-${spring.application.name}
         tags: appType=frontend, appVersion=1.0.0
         healthCheckPath: /services/health
         healthCheckInterval: 15s
       config:
         enabled: true
   application:
-    ID: myConsulApp
-    name: myConsulApp
+    ID: myConsulFrontendApp
+    name: myConsulFrontendApp
 management:
-  ID: myConsulApp-management
-  Name: myConsulApp-management
+  ID: myConsulFrontendApp-management
+  Name: myConsulFrontendApp-management
   server:
     port: 4452

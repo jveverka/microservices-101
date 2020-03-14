@@ -16,3 +16,6 @@ subprojects {
 
 project(':consul-frontend') {
 }
+
+project(':consul-backend') {
+}

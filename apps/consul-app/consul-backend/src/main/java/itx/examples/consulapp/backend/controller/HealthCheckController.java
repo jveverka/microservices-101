@@ -1,4 +1,4 @@
-package itx.examples.consulapp.frontend.controller;
+package itx.examples.consulapp.backend.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +9,7 @@ public class HealthCheckController {
 
     @RequestMapping("/health")
     public String home() {
-        return "{ \"status\": \"OK-FE\" }";
+        return "{ \"status\": \"OK-BE\" }";
     }
 
 }

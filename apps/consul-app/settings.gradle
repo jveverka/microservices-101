@@ -1,3 +1,5 @@
+include "consul-backend"
 include "consul-frontend"
 
+project(':consul-backend').projectDir = new File('consul-backend')
 project(':consul-frontend').projectDir = new File('consul-frontend')

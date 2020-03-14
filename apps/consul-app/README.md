@@ -15,7 +15,8 @@
   ```
 * create consul key/value configuration
   ```
-  Key: /config/myConsulApp/my/prop Value: value-from-consul
+  Key: /config/myConsulFrontendApp/my/prop Value: value-from-consul
+  Key: /config/myConsulBackendApp/my/prop Value: value-from-consul
   ```
 * build project
   ```
@@ -25,8 +26,17 @@
   ```
   java -jar consul-frontend/build/libs/consul-frontend-1.0.0-SNAPSHOT.jar 
   ```
-* try application endpoints
+* try consul-frontend application endpoints
   ```
   GET http://localhost:8080/services/data
   GET http://localhost:8080/services/health
   ```
+* start consul-backend application
+  ```
+  java -jar consul-frontend/build/libs/consul-backend-1.0.0-SNAPSHOT.jar 
+  ```
+* try consul-backend application endpoints
+  ```
+  GET http://localhost:8081/services/data
+  GET http://localhost:8081/services/health  
+  
