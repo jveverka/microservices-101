@@ -15,7 +15,9 @@ project(':app-apis').projectDir = new File('apps/multi-layer-app/app-apis')
 project(':app-backend').projectDir = new File('apps/multi-layer-app/app-backend')
 project(':app-frontend').projectDir = new File('apps/multi-layer-app/app-frontend')
 
+include "consul-common"
 include "consul-backend"
 include "consul-frontend"
+project(':consul-common').projectDir = new File('apps/consul-app/consul-common')
 project(':consul-backend').projectDir = new File('apps/consul-app/consul-backend')
 project(':consul-frontend').projectDir = new File('apps/consul-app/consul-frontend')

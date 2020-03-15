@@ -1,0 +1,14 @@
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+group = 'itx.examples.consulapp'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+dependencies {
+    implementation('com.fasterxml.jackson.core:jackson-annotations:2.10.2')
+}

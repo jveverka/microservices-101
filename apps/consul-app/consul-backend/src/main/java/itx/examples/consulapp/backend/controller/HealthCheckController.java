@@ -1,5 +1,8 @@
 package itx.examples.consulapp.backend.controller;
 
+import itx.examples.consulapp.common.HealthResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/services")
 public class HealthCheckController {
 
-    @RequestMapping("/health")
-    public String home() {
-        return "{ \"status\": \"OK-BE\" }";
+    @GetMapping("/health")
+    public ResponseEntity<HealthResponse> home() {
+        return ResponseEntity.ok(new HealthResponse("OK-BE"));
     }
 
 }

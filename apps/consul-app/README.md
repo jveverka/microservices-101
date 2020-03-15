@@ -1,7 +1,12 @@
 # k8s Consul example
+This project is simple demo of microservice application using 
 [Spring-cloud-consul](https://cloud.spring.io/spring-cloud-consul/reference/html/) + [consul.io](https://consul.io)
 
+This project is __WIP__ !
+
 ## Run on localhost
+![consul-example](docs/consul-example.svg)
+
 * download and install [consul](https://releases.hashicorp.com/consul/1.7.0/consul_1.7.0_linux_amd64.zip)
   ```
   unzip consul_1.7.0_linux_amd64.zip
@@ -13,7 +18,7 @@
   # or start single node consul server agent
   ./consul agent -server -ui=true -bootstrap-expect=1 -bind=127.0.0.1 -data-dir=data-node-0
   ```
-* create consul key/value configuration
+* create consul key/value configurations for frontend and backend
   ```
   Key: /config/myConsulFrontendApp/my/prop Value: value-from-consul
   Key: /config/myConsulBackendApp/my/prop Value: value-from-consul

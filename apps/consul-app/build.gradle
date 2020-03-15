@@ -14,8 +14,17 @@ subprojects {
     }
 }
 
+project(':consul-common') {
+}
+
 project(':consul-frontend') {
+    dependencies {
+        implementation project(':consul-common')
+    }
 }
 
 project(':consul-backend') {
+    dependencies {
+        implementation project(':consul-common')
+    }
 }
