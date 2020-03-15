@@ -35,9 +35,10 @@ In case of running all 3 nodes as VMs on KVM, following setup is recommended:
   ```
       <dhcp>
         <range start='192.168.122.2' end='192.168.122.254'/>
-        <host mac='52:54:00:89:8d:7a' name='ubuntu-node-001' ip='192.168.122.11'/>
-        <host mac='52:54:00:f7:32:ec' name='ubuntu-node-002' ip='192.168.122.12'/>
-        <host mac='52:54:00:c9:b9:2a' name='ubuntu-node-003' ip='192.168.122.13'/>
+        <host mac='52:54:00:89:7a:8d' name='ubuntu-node-000' ip='192.168.122.100'/>
+        <host mac='52:54:00:89:8d:7a' name='ubuntu-node-001' ip='192.168.122.101'/>
+        <host mac='52:54:00:f7:32:ec' name='ubuntu-node-002' ip='192.168.122.102'/>
+        <host mac='52:54:00:c9:b9:2a' name='ubuntu-node-003' ip='192.168.122.103'/>
       </dhcp> 
   ```  
 
